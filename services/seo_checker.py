@@ -79,6 +79,9 @@ class SEOAnalyzer:
         "meta_analysis": self.evaluate_meta_description(),
         "h1_analysis": self.evaluate_h1(),
         "canonical_analysis": self.evaluate_canonical(),
+        
+        "open_graph": self.get_open_graph(),
+        "open_graph_analysis": self.evaluate_open_graph(),
         }
 
     # -------------------------------------------------
@@ -234,4 +237,71 @@ class SEOAnalyzer:
             "status": "Warning",
             "score": 5,
             "message": "Canonical URL should be absolute."
+        }
+
+
+    # -------------------------------------------------
+    # Open Graph
+    # -------------------------------------------------
+
+    def get_open_graph(self):
+
+        properties = [
+            "og:title",
+            "og:description",
+            "og:image",
+            "og:url",
+            "og:type"
+        ]
+
+        og = {}
+
+        for prop in properties:
+
+            tag = self.soup.find(
+                "meta",
+                attrs={"property": prop}
+            )
+
+            og[prop] = tag.get("content", "").strip() if tag else "Not Found"
+
+        return og
+
+    # -------------------------------------------------
+    # Open Graph Evaluation
+    # -------------------------------------------------
+
+    def evaluate_open_graph(self):
+        og = self.get_open_graph()
+
+        found = sum(
+            value != "Not Found"
+            for value in og.values()
+        )
+
+        total = len(og)
+
+        percentage = round((found / total) * 100)
+
+        if found == total:
+            status = "Pass"
+            score = 10
+            message = "All Open Graph tags are present."
+        elif found >= 3:
+            status = "Warning"
+            score = 6
+            message = "Some Open Graph tags are missing."
+        else:
+            status = "Fail"
+            score = 2
+            message = "Most Open Graph tags are missing."
+
+        return {
+            "value": og,
+            "found": found,
+            "total": total,
+            "coverage": percentage,
+            "status": status,
+            "score": score,
+            "message": message
         }

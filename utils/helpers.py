@@ -18,16 +18,29 @@ def show_audit_card(title: str, data: dict):
         st.metric("Score", f'{data["score"]}/10')
 
     with col2:
-        st.metric("Status", status)
+        st.metric("Status", data["status"])
 
-    if "length" in data:
-        st.write(f"**Length:** {data['length']}")
+    # Display additional fields if available
+    for field in ["length", "count", "coverage", "found", "total"]:
 
-    if "count" in data:
-        st.write(f"**Count:** {data['count']}")
+        if field in data:
+            st.write(
+                f"**{field.replace('_', ' ').title()}:** {data[field]}"
+            )
 
+    # Display value
     if "value" in data:
-        st.write(f"**Value:**")
-        st.write(data["value"])
+
+        if isinstance(data["value"], dict):
+
+            st.write("**Properties:**")
+
+            for key, value in data["value"].items():
+                st.write(f"**{key}:** {value}")
+
+        else:
+
+            st.write("**Value:**")
+            st.write(data["value"])
 
     st.info(data["message"])

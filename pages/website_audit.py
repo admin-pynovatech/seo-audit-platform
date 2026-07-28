@@ -21,20 +21,20 @@ if st.button("Start Audit"):
 
     with st.spinner("Analyzing website..."):
         result = crawler.crawl(url)
-        calculator = SEOScoreCalculator(result)
-        dashboard = calculator.calculate()
 
     if result["success"]:
 
-        # Create dashboard data
+        # ---------------------------------
+        # Dashboard Data
+        # ---------------------------------
         calculator = SEOScoreCalculator(result)
         dashboard = calculator.calculate()
 
         st.success(result["message"])
 
-        # -----------------------------
+        # ---------------------------------
         # SEO Dashboard
-        # -----------------------------
+        # ---------------------------------
         st.header("📊 SEO Dashboard")
 
         st.metric(
@@ -49,53 +49,50 @@ if st.button("Start Audit"):
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.success(f'Pass\n\n{dashboard["summary"]["Pass"]}')
+            st.success(
+                f'Pass\n\n{dashboard["summary"]["Pass"]}'
+            )
 
         with col2:
-            st.warning(f'Warning\n\n{dashboard["summary"]["Warning"]}')
+            st.warning(
+                f'Warning\n\n{dashboard["summary"]["Warning"]}'
+            )
 
         with col3:
-            st.error(f'Fail\n\n{dashboard["summary"]["Fail"]}')
+            st.error(
+                f'Fail\n\n{dashboard["summary"]["Fail"]}'
+            )
 
-        # -----------------------------
-        # Website Information
-        # -----------------------------
+        # ---------------------------------
+        # Technical Information
+        # ---------------------------------
         st.divider()
+
+        st.header("🌐 Technical Information")
 
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.metric("Status Code", result["status_code"])
+            st.metric(
+                "Status Code",
+                result["status_code"]
+            )
 
         with col2:
-            st.metric("Response Time", f'{result["response_time"]} sec')
+            st.metric(
+                "Response Time",
+                f'{result["response_time"]} sec'
+            )
 
         with col3:
-            st.metric("Final URL", result["url"])
+            st.metric(
+                "Final URL",
+                result["url"]
+            )
 
-        # -----------------------------
-        # SEO Data
-        # -----------------------------
-        st.divider()
-
-        st.subheader("📄 Page Title")
-        st.write(result["title"])
-
-        st.subheader("📝 Meta Description")
-        st.write(result["meta_description"])
-
-        st.subheader("🏷️ Headings")
-        for tag, items in result["headings"].items():
-            st.markdown(f"### {tag} ({len(items)})")
-            if items:
-                for item in items:
-                    st.write(f"• {item}")
-            else:
-                st.caption("None")
-
-        # -----------------------------
+        # ---------------------------------
         # SEO Audit
-        # -----------------------------
+        # ---------------------------------
         st.divider()
 
         st.header("📈 SEO Audit")
@@ -114,10 +111,41 @@ if st.button("Start Audit"):
             "H1 Tag",
             result["h1_analysis"]
         )
+
         show_audit_card(
             "Canonical URL",
             result["canonical_analysis"]
         )
+
+        show_audit_card(
+            "Open Graph",
+            result["open_graph_analysis"]
+        )
+
+        # ---------------------------------
+        # Extracted SEO Information
+        # ---------------------------------
+        st.divider()
+
+        st.header("📄 Extracted SEO Information")
+
+        st.subheader("Page Title")
+        st.write(result["title"])
+
+        st.subheader("Meta Description")
+        st.write(result["meta_description"])
+
+        st.subheader("Headings")
+
+        for tag, items in result["headings"].items():
+
+            with st.expander(f"{tag} ({len(items)})", expanded=False):
+
+                if items:
+                    for item in items:
+                        st.write(f"• {item}")
+                else:
+                    st.caption("None")
 
     else:
         st.error(result["message"])
