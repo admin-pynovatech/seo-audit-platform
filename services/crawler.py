@@ -1,8 +1,10 @@
 """
 Website Crawler
 
-Responsible for downloading webpages and returning
-structured information for SEO analysis.
+Responsible for downloading webpages and extracting
+basic website information.
+
+This module DOES NOT calculate SEO scores.
 """
 
 import time
@@ -13,18 +15,16 @@ from bs4 import BeautifulSoup
 from config import Config
 from utils.validators import validate_url
 
+from services.seo_checker import SEOAnalyzer
+
 
 class WebsiteCrawler:
-    """Website crawler."""
 
     def __init__(self):
         self.headers = Config.HEADERS
         self.timeout = Config.REQUEST_TIMEOUT
 
     def crawl(self, url: str) -> dict:
-        """
-        Crawl a website and return structured data.
-        """
 
         if not validate_url(url):
             return {
@@ -34,43 +34,32 @@ class WebsiteCrawler:
 
         try:
 
-            start_time = time.perf_counter()
+            start = time.perf_counter()
 
             response = requests.get(
                 url,
                 headers=self.headers,
-                timeout=self.timeout
+                timeout=self.timeout,
+                allow_redirects=True
             )
 
-            end_time = time.perf_counter()
+            response.raise_for_status()
 
-            soup = BeautifulSoup(
-                response.text,
-                "lxml"
-            )
+            end = time.perf_counter()
+
+            seo = SEOAnalyzer(response.text)
+
+            seo_data = seo.analyze()
 
             return {
                 "success": True,
                 "url": response.url,
                 "status_code": response.status_code,
-                "response_time": round(end_time - start_time, 3),
-                "html": response.text,
-                "soup": soup,
+                "response_time": round(end - start, 3),
+
+                **seo_data,
+
                 "message": "Website crawled successfully."
-            }
-
-        except requests.exceptions.Timeout:
-
-            return {
-                "success": False,
-                "message": "Request timeout."
-            }
-
-        except requests.exceptions.ConnectionError:
-
-            return {
-                "success": False,
-                "message": "Connection error."
             }
 
         except requests.exceptions.RequestException as e:
@@ -79,3 +68,5 @@ class WebsiteCrawler:
                 "success": False,
                 "message": str(e)
             }
+
+        
