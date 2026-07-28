@@ -1,5 +1,15 @@
 import streamlit as st
 
-st.title("🌐 Website Audit")
+from utils.validators import validate_url
 
-st.info("Website Audit module is under development.")
+st.title("Website Audit")
+
+url = st.text_input("Enter Website URL")
+
+if st.button("Validate"):
+
+    if validate_url(url):
+        st.success("Valid URL")
+
+    else:
+        st.error("Invalid URL")
