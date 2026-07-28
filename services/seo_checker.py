@@ -73,10 +73,12 @@ class SEOAnalyzer:
         "title": self.get_title(),
         "meta_description": self.get_meta_description(),
         "headings": self.get_headings(),
+        "canonical": self.get_canonical(),
 
         "title_analysis": self.evaluate_title(),
         "meta_analysis": self.evaluate_meta_description(),
         "h1_analysis": self.evaluate_h1(),
+        "canonical_analysis": self.evaluate_canonical(),
         }
 
     # -------------------------------------------------
@@ -186,4 +188,50 @@ class SEOAnalyzer:
             "status": "Warning",
             "score": 5,
             "message": "Multiple H1 tags found."
+        }
+
+    # -------------------------------------------------
+    # Canonical URL
+    # -------------------------------------------------
+
+    def get_canonical(self):
+
+        canonical = self.soup.find(
+            "link",
+            attrs={"rel": "canonical"}
+        )
+
+        if canonical:
+            return canonical.get("href", "").strip()
+
+        return "Not Found"
+
+    # -------------------------------------------------
+    # Canonical Evaluation
+    # -------------------------------------------------
+
+    def evaluate_canonical(self):
+        canonical = self.get_canonical()
+
+        if canonical == "Not Found":
+            return {
+                "value": canonical,
+                "status": "Fail",
+                "score": 0,
+                "message": "Canonical tag is missing."
+            }
+
+        if canonical.startswith("http://") or canonical.startswith("https://"):
+            return {
+                "value": canonical,
+                "status": "Pass",
+                "score": 10,
+                "message": "Canonical URL is valid."
+            }
+
+        return {
+            "value": canonical,
+            "status": "Warning",
+            "score": 5,
+            "message": "Canonical URL should be absolute."
         }

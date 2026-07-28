@@ -114,6 +114,10 @@ if st.button("Start Audit"):
             "H1 Tag",
             result["h1_analysis"]
         )
+        show_audit_card(
+            "Canonical URL",
+            result["canonical_analysis"]
+        )
 
     else:
         st.error(result["message"])
