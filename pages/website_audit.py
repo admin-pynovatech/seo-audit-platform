@@ -1,15 +1,44 @@
 import streamlit as st
 
-from utils.validators import validate_url
+from services.crawler import WebsiteCrawler
 
-st.title("Website Audit")
+st.title("🌐 Website Audit")
 
-url = st.text_input("Enter Website URL")
+url = st.text_input(
+    "Website URL",
+    placeholder="https://example.com"
+)
 
-if st.button("Validate"):
+if st.button("Start Audit"):
 
-    if validate_url(url):
-        st.success("Valid URL")
+    crawler = WebsiteCrawler()
+
+    result = crawler.crawl(url)
+
+    if result["success"]:
+
+        st.success(result["message"])
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric(
+                "Status Code",
+                result["status_code"]
+            )
+
+        with col2:
+            st.metric(
+                "Response Time",
+                f'{result["response_time"]} sec'
+            )
+
+        with col3:
+            st.metric(
+                "Final URL",
+                result["url"]
+            )
 
     else:
-        st.error("Invalid URL")
+
+        st.error(result["message"])
