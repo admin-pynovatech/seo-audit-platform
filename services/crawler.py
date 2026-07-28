@@ -1,10 +1,3 @@
-"""
-Website Crawler
-
-Responsible for downloading webpages and extracting
-basic website information.
-"""
-
 import time
 
 import requests
@@ -13,25 +6,19 @@ from bs4 import BeautifulSoup
 from config import Config
 from utils.validators import validate_url
 
-
 class WebsiteCrawler:
-
     def __init__(self):
         self.headers = Config.HEADERS
         self.timeout = Config.REQUEST_TIMEOUT
 
     def crawl(self, url: str) -> dict:
-
         if not validate_url(url):
             return {
                 "success": False,
                 "message": "Invalid URL."
             }
-
         try:
-
             start = time.perf_counter()
-
             response = requests.get(
                 url,
                 headers=self.headers,
@@ -40,9 +27,7 @@ class WebsiteCrawler:
             )
 
             end = time.perf_counter()
-
             response.raise_for_status()
-
             soup = BeautifulSoup(response.text, "html.parser")
 
             title = (
@@ -127,3 +112,6 @@ class WebsiteCrawler:
                 "success": False,
                 "message": f"Unexpected Error: {e}"
             }
+
+
+        

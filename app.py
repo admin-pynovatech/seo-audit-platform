@@ -4,7 +4,7 @@ import streamlit as st
 # Page Configuration
 # --------------------------------------------------
 st.set_page_config(
-    page_title="SEO Audit Platform",
+    page_title="Website Crawler",
     page_icon="🌐",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -21,7 +21,7 @@ dashboard = st.Page(
 
 website_audit = st.Page(
     "pages/website_audit.py",
-    title="Website Audit",
+    title="Website Crawler",
     icon="🌐"
 )
 
