@@ -1,17 +1,15 @@
 import streamlit as st
 
 from services.crawler import WebsiteCrawler
-from utils.helpers import show_audit_card
-from utils.score import SEOScoreCalculator
 
-st.title("🌐 Website Audit")
+st.title("🌐 Website Crawler")
 
 url = st.text_input(
     "Website URL",
     placeholder="https://example.com"
 )
 
-if st.button("Start Audit"):
+if st.button("Start Crawl"):
 
     if not url.strip():
         st.warning("Please enter a website URL.")
@@ -19,160 +17,104 @@ if st.button("Start Audit"):
 
     crawler = WebsiteCrawler()
 
-    with st.spinner("Analyzing website..."):
+    with st.spinner("Crawling website..."):
+
         result = crawler.crawl(url)
-        # st.write("Crawler Result:", result)  # Debug
 
-        if result["success"]:
-            st.session_state["result"] = result
-            st.success("Result saved to session_state")
-            # -----------------------------
-            # Dashboard
-            # -----------------------------
-            calculator = SEOScoreCalculator(result)
+    if result["success"]:
 
-            dashboard = calculator.calculate()
-            st.success(result["message"])
+        st.success(result["message"])
 
-            st.header("📊 SEO Dashboard")
+        # -----------------------------
+        # Crawl Information
+        # -----------------------------
+        st.divider()
+        st.header("🌐 Crawl Information")
 
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
             st.metric(
-                "SEO Score",
-                f'{dashboard["seo_score"]}/100'
+                "Status Code",
+                result["status_code"]
             )
 
-            st.progress(
-                dashboard["seo_score"] / 100
+        with col2:
+            st.metric(
+                "Response Time",
+                f'{result["response_time"]:.2f} sec'
             )
 
-            col1, col2, col3 = st.columns(3)
-
-            with col1:
-                st.success(
-                    f'Pass\n\n{dashboard["summary"]["Pass"]}'
-                )
-
-            with col2:
-                st.warning(
-                    f'Warning\n\n{dashboard["summary"]["Warning"]}'
-                )
-
-            with col3:
-                st.error(
-                    f'Fail\n\n{dashboard["summary"]["Fail"]}'
-                )
-
-            # -----------------------------
-            # Technical Information
-            # -----------------------------
-            st.divider()
-
-            st.header("🌐 Technical Information")
-
-            col1, col2, col3 = st.columns(3)
-
-            with col1:
-                st.metric(
-                    "Status Code",
-                    result["status_code"]
-                )
-
-            with col2:
-                st.metric(
-                    "Response Time",
-                    f'{result["response_time"]} sec'
-                )
-
-            with col3:
-                st.metric(
-                    "Final URL",
-                    result["url"]
-                )
-
-            # -----------------------------
-            # SEO Audit
-            # -----------------------------
-            st.divider()
-
-            st.header("📈 SEO Audit")
-
-            show_audit_card(
-                "Title Tag",
-                result["title_analysis"]
+        with col3:
+            st.metric(
+                "Redirects",
+                result["redirects"]
             )
 
-            show_audit_card(
-                "Meta Description",
-                result["meta_analysis"]
-            )
+        st.write("**Final URL:**")
+        st.code(result["url"])
 
-            show_audit_card(
-                "H1 Tag",
-                result["h1_analysis"]
-            )
+        # -----------------------------
+        # Page Information
+        # -----------------------------
+        st.divider()
+        st.header("📄 Page Information")
 
-            show_audit_card(
-                "Canonical URL",
-                result["canonical_analysis"]
-            )
+        col1, col2 = st.columns(2)
 
-            show_audit_card(
-                "Open Graph",
-                result["open_graph_analysis"]
-            )
-
-            show_audit_card(
-                "HTML Language",
-                result["language_analysis"]
-            )
-
-            show_audit_card(
-                "Charset",
-                result["charset_analysis"]
-            )
-
-            show_audit_card(
-                "Viewport",
-                result["viewport_analysis"]
-            )
-
-            show_audit_card(
-                "Robots Meta Tag",
-                result["robots_analysis"]
-            )
-
-            show_audit_card(
-                "Favicon",
-                result["favicon_analysis"]
-            )
-
-            # -----------------------------
-            # Extracted SEO Information
-            # -----------------------------
-            st.divider()
-
-            st.header("📄 Extracted SEO Information")
-
-            st.subheader("Page Title")
+        with col1:
+            st.write("**Title**")
             st.write(result["title"])
 
-            st.subheader("Meta Description")
-            st.write(result["meta_description"])
+            st.write("**Content Type**")
+            st.write(result["content_type"])
 
-            st.subheader("Headings")
+            st.write("**Encoding**")
+            st.write(result["encoding"])
 
-            for tag, items in result["headings"].items():
+        with col2:
+            st.write("**Server**")
+            st.write(result["server"])
 
-                with st.expander(
-                    f"{tag} ({len(items)})",
-                    expanded=False
-                ):
+            st.write("**Content Length**")
+            st.write(result["content_length"])
 
-                    if items:
-                        for item in items:
-                            st.write(f"• {item}")
-                    else:
-                        st.caption("None")
+            st.write("**Protocol**")
+            st.write(result["protocol"])
 
-        else:
-            st.error(result["message"])
+        # -----------------------------
+        # Page Statistics
+        # -----------------------------
+        st.divider()
+        st.header("📊 Page Statistics")
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric(
+                "Links",
+                result["links"]
+            )
+
+        with col2:
+            st.metric(
+                "Images",
+                result["images"]
+            )
+
+        with col3:
+            st.metric(
+                "Scripts",
+                result["scripts"]
+            )
+
+        # -----------------------------
+        # HTTP Headers
+        # -----------------------------
+        st.divider()
+        st.header("📡 HTTP Headers")
+
+        st.json(result["headers"])
+
+    else:
+        st.error(result["message"])
