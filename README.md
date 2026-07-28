@@ -211,7 +211,7 @@ See the LICENSE file for details.
 
 Building modern AI, Data Analytics, and Python solutions.
 
-GitHub: https://github.com/PyNova-Tech
+GitHub: https://github.com/admin-pynovatech
 
 > This repository is maintained by PyNova Tech as an educational and portfolio project demonstrating modern Python development practices.
 ---
