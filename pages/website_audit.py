@@ -1,5 +1,5 @@
 import streamlit as st
-
+import pandas as pd
 from services.crawler import WebsiteCrawler
 
 st.title("🌐 Website Crawler")
@@ -28,28 +28,33 @@ if st.button("Start Crawl"):
         # -----------------------------
         # Crawl Information
         # -----------------------------
-        st.divider()
-        st.header("🌐 Crawl Information")
-
         col1, col2, col3 = st.columns(3)
 
-        with col1:
-            st.metric(
-                "Status Code",
-                result["status_code"]
+        def metric_card(title, value, icon):
+            st.markdown(
+                f"""
+                <div style="
+                    border:1px solid #ddd;
+                    border-radius:10px;
+                    padding:20px;
+                    text-align:center;
+                    box-shadow:2px 2px 8px rgba(0,0,0,0.08);
+                ">
+                    <h4>{icon} {title}</h4>
+                    <h2>{value}</h2>
+                </div>
+                """,
+                unsafe_allow_html=True
             )
+
+        with col1:
+            metric_card("Status Code", result["status_code"], "📡")
 
         with col2:
-            st.metric(
-                "Response Time",
-                f'{result["response_time"]:.2f} sec'
-            )
+            metric_card("Response Time", f"{result['response_time']:.2f} sec", "⏱️")
 
         with col3:
-            st.metric(
-                "Redirects",
-                result["redirects"]
-            )
+            metric_card("Redirects", result["redirects"], "🔄")
 
         st.write("**Final URL:**")
         st.code(result["url"])
@@ -111,10 +116,14 @@ if st.button("Start Crawl"):
         # -----------------------------
         # HTTP Headers
         # -----------------------------
+
         st.divider()
         st.header("📡 HTTP Headers")
 
-        st.json(result["headers"])
+        for key, value in result["headers"].items():
+
+            with st.expander(key):
+                st.code(value)
 
     else:
         st.error(result["message"])

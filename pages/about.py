@@ -6,25 +6,36 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("ℹ️ About SEO Audit Platform")
+st.title("ℹ️ About Website Crawler")
 
 st.markdown("""
 ## Overview
 
-SEO Audit Platform is a Streamlit-based application that analyzes a website's
-technical SEO and provides actionable insights to improve search engine visibility.
+**Website Crawler** is a Python-based web crawling application built with
+**Streamlit** that allows users to inspect websites by sending HTTP requests,
+retrieving webpage information, and displaying useful crawling statistics.
+
+The application is designed to demonstrate the fundamentals of web crawling,
+HTTP communication, HTML parsing, and interactive dashboard development using Python.
 """)
 
 st.divider()
 
-st.subheader("Features")
+st.subheader("✨ Features")
 
 features = [
+    "Website URL Validation",
     "Website Crawling",
-    "Technical SEO Analysis",
-    "Broken Link Detection",
-    "Google PageSpeed Insights",
-    "Report Generation",
+    "HTTP Request & Response Analysis",
+    "Response Time Measurement",
+    "Redirect Detection",
+    "Page Title Extraction",
+    "Server Information",
+    "Content Type Detection",
+    "Character Encoding Detection",
+    "Content Length Information",
+    "Page Statistics",
+    "HTTP Headers Viewer",
 ]
 
 for feature in features:
@@ -32,15 +43,15 @@ for feature in features:
 
 st.divider()
 
-st.subheader("Technology Stack")
+st.subheader("🛠️ Technology Stack")
 
 tech_stack = [
     "Python",
     "Streamlit",
-    "BeautifulSoup",
     "Requests",
-    "ReportLab",
-    "Google PageSpeed Insights API",
+    "BeautifulSoup4",
+    "Pandas",
+    "Python-dotenv",
 ]
 
 for tech in tech_stack:
@@ -48,20 +59,79 @@ for tech in tech_stack:
 
 st.divider()
 
-st.subheader("Project Structure")
+st.subheader("📁 Project Structure")
 
 st.code("""
-seo-audit-platform/
+website-crawler/
+│
+├── app.py
+├── config.py
+├── requirements.txt
+├── README.md
 │
 ├── pages/
+│   ├── dashboard.py
+│   ├── website_crawler.py
+│   └── about.py
+│
 ├── services/
+│   └── crawler.py
+│
 ├── utils/
-├── reports/
-├── assets/
-├── app.py
-└── config.py
+│   ├── helpers.py
+│   └── validators.py
+│
+└── assets/
 """, language="text")
 
 st.divider()
 
-st.caption("Version 1.0.0")
+st.subheader("🎯 Project Goals")
+
+st.markdown("""
+This project aims to:
+
+- Learn the fundamentals of web crawling.
+- Understand HTTP requests and responses.
+- Parse HTML using BeautifulSoup.
+- Build interactive dashboards with Streamlit.
+- Develop clean, modular Python applications following best practices.
+""")
+
+st.divider()
+
+st.subheader("🚀 Future Improvements")
+
+future_features = [
+    "robots.txt Detection",
+    "sitemap.xml Detection",
+    "HTML Language Detection",
+    "Charset Detection",
+    "Favicon Detection",
+    "Forms & Buttons Counter",
+    "Video & Audio Detection",
+    "Cookie Analysis",
+    "Security Headers Inspection",
+    "Asynchronous Crawling using asyncio",
+    "FastAPI REST API",
+    "Docker Support",
+]
+
+for item in future_features:
+    st.markdown(f"🔹 {item}")
+
+st.divider()
+
+st.subheader("👨‍💻 Developed By")
+
+st.markdown("""
+**PyNova Tech**
+
+Building practical Python, AI, Automation, and Data Analytics solutions.
+
+**GitHub:** https://github.com/admin-pynovatech
+""")
+
+st.divider()
+
+st.caption("Website Crawler • Version 1.0.0")
