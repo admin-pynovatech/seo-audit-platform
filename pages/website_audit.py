@@ -127,6 +127,11 @@ if st.button("Start Audit"):
             result["language_analysis"]
         )
 
+        show_audit_card(
+            "Charset",
+            result["charset_analysis"]
+        )
+
         # ---------------------------------
         # Extracted SEO Information
         # ---------------------------------

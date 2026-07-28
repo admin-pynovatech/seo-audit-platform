@@ -77,6 +77,7 @@ class SEOAnalyzer:
 
         "title_analysis": self.evaluate_title(),
         "meta_analysis": self.evaluate_meta_description(),
+
         "h1_analysis": self.evaluate_h1(),
         "canonical_analysis": self.evaluate_canonical(),
         
@@ -85,6 +86,9 @@ class SEOAnalyzer:
 
         "language": self.get_language(),
         "language_analysis": self.evaluate_language(),
+
+        "charset": self.get_charset(),
+        "charset_analysis": self.evaluate_charset(),
         }
 
     # -------------------------------------------------

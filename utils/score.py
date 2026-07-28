@@ -18,6 +18,7 @@ class SEOScoreCalculator:
             self.analysis["canonical_analysis"],
             self.analysis["open_graph_analysis"],
             self.analysis["language_analysis"],
+            self.analysis["charset_analysis"],
         ]
 
         total_score = sum(item["score"] for item in checks)
