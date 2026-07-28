@@ -38,38 +38,3 @@ class ReportGenerator:
         document.build(elements)
 
         return file_path
-
-    def generate_csv(self, file_path):
-
-        with open(
-            file_path,
-            "w",
-            newline="",
-            encoding="utf-8"
-        ) as file:
-
-            writer = csv.writer(file)
-
-            writer.writerow(["Metric", "Value"])
-
-            for key, value in self.report_data.items():
-
-                writer.writerow([key, value])
-
-        return file_path
-
-    def generate_json(self, file_path):
-
-        with open(
-            file_path,
-            "w",
-            encoding="utf-8"
-        ) as file:
-
-            json.dump(
-                self.report_data,
-                file,
-                indent=4
-            )
-
-        return file_path

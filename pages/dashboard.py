@@ -51,7 +51,6 @@ features = [
     "SEO Analysis",
     "Broken Link Detection",
     "Google PageSpeed Analysis",
-    "Export Reports",
 ]
 
 for feature in features:

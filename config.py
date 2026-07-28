@@ -37,12 +37,3 @@ class Config:
     # Reports
     # -------------------------
     REPORTS_DIR = "reports"
-
-    # -------------------------
-    # Supported Export Formats
-    # -------------------------
-    EXPORT_FORMATS = [
-        "PDF",
-        "CSV",
-        "JSON"
-    ]

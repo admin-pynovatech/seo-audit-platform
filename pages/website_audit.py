@@ -3,7 +3,6 @@ import streamlit as st
 from services.crawler import WebsiteCrawler
 from utils.helpers import show_audit_card
 from utils.score import SEOScoreCalculator
-from utils.export import (export_pdf,export_csv,export_json)
 
 st.title("🌐 Website Audit")
 
@@ -22,177 +21,158 @@ if st.button("Start Audit"):
 
     with st.spinner("Analyzing website..."):
         result = crawler.crawl(url)
+        # st.write("Crawler Result:", result)  # Debug
 
-    if result["success"]:
+        if result["success"]:
+            st.session_state["result"] = result
+            st.success("Result saved to session_state")
+            # -----------------------------
+            # Dashboard
+            # -----------------------------
+            calculator = SEOScoreCalculator(result)
 
-        # -----------------------------
-        # Dashboard
-        # -----------------------------
-        calculator = SEOScoreCalculator(result)
-        dashboard = calculator.calculate()
+            dashboard = calculator.calculate()
+            st.success(result["message"])
 
-        st.success(result["message"])
+            st.header("📊 SEO Dashboard")
 
-        st.divider()
-
-        st.subheader("📥 Export Reports")
-
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
-            if st.button("📄 Export PDF"):
-                file = export_pdf(result)
-                st.success(f"PDF saved to {file}")
-
-        with col2:
-            if st.button("📊 Export CSV"):
-                file = export_csv(result)
-                st.success(f"CSV saved to {file}")
-
-        with col3:
-            if st.button("📝 Export JSON"):
-                file = export_json(result)
-                st.success(f"JSON saved to {file}")
-
-        st.header("📊 SEO Dashboard")
-
-        st.metric(
-            "SEO Score",
-            f'{dashboard["seo_score"]}/100'
-        )
-
-        st.progress(
-            dashboard["seo_score"] / 100
-        )
-
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
-            st.success(
-                f'Pass\n\n{dashboard["summary"]["Pass"]}'
-            )
-
-        with col2:
-            st.warning(
-                f'Warning\n\n{dashboard["summary"]["Warning"]}'
-            )
-
-        with col3:
-            st.error(
-                f'Fail\n\n{dashboard["summary"]["Fail"]}'
-            )
-
-        # -----------------------------
-        # Technical Information
-        # -----------------------------
-        st.divider()
-
-        st.header("🌐 Technical Information")
-
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
             st.metric(
-                "Status Code",
-                result["status_code"]
+                "SEO Score",
+                f'{dashboard["seo_score"]}/100'
             )
 
-        with col2:
-            st.metric(
-                "Response Time",
-                f'{result["response_time"]} sec'
+            st.progress(
+                dashboard["seo_score"] / 100
             )
 
-        with col3:
-            st.metric(
-                "Final URL",
-                result["url"]
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.success(
+                    f'Pass\n\n{dashboard["summary"]["Pass"]}'
+                )
+
+            with col2:
+                st.warning(
+                    f'Warning\n\n{dashboard["summary"]["Warning"]}'
+                )
+
+            with col3:
+                st.error(
+                    f'Fail\n\n{dashboard["summary"]["Fail"]}'
+                )
+
+            # -----------------------------
+            # Technical Information
+            # -----------------------------
+            st.divider()
+
+            st.header("🌐 Technical Information")
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.metric(
+                    "Status Code",
+                    result["status_code"]
+                )
+
+            with col2:
+                st.metric(
+                    "Response Time",
+                    f'{result["response_time"]} sec'
+                )
+
+            with col3:
+                st.metric(
+                    "Final URL",
+                    result["url"]
+                )
+
+            # -----------------------------
+            # SEO Audit
+            # -----------------------------
+            st.divider()
+
+            st.header("📈 SEO Audit")
+
+            show_audit_card(
+                "Title Tag",
+                result["title_analysis"]
             )
 
-        # -----------------------------
-        # SEO Audit
-        # -----------------------------
-        st.divider()
+            show_audit_card(
+                "Meta Description",
+                result["meta_analysis"]
+            )
 
-        st.header("📈 SEO Audit")
+            show_audit_card(
+                "H1 Tag",
+                result["h1_analysis"]
+            )
 
-        show_audit_card(
-            "Title Tag",
-            result["title_analysis"]
-        )
+            show_audit_card(
+                "Canonical URL",
+                result["canonical_analysis"]
+            )
 
-        show_audit_card(
-            "Meta Description",
-            result["meta_analysis"]
-        )
+            show_audit_card(
+                "Open Graph",
+                result["open_graph_analysis"]
+            )
 
-        show_audit_card(
-            "H1 Tag",
-            result["h1_analysis"]
-        )
+            show_audit_card(
+                "HTML Language",
+                result["language_analysis"]
+            )
 
-        show_audit_card(
-            "Canonical URL",
-            result["canonical_analysis"]
-        )
+            show_audit_card(
+                "Charset",
+                result["charset_analysis"]
+            )
 
-        show_audit_card(
-            "Open Graph",
-            result["open_graph_analysis"]
-        )
+            show_audit_card(
+                "Viewport",
+                result["viewport_analysis"]
+            )
 
-        show_audit_card(
-            "HTML Language",
-            result["language_analysis"]
-        )
+            show_audit_card(
+                "Robots Meta Tag",
+                result["robots_analysis"]
+            )
 
-        show_audit_card(
-            "Charset",
-            result["charset_analysis"]
-        )
+            show_audit_card(
+                "Favicon",
+                result["favicon_analysis"]
+            )
 
-        show_audit_card(
-            "Viewport",
-            result["viewport_analysis"]
-        )
+            # -----------------------------
+            # Extracted SEO Information
+            # -----------------------------
+            st.divider()
 
-        show_audit_card(
-            "Robots Meta Tag",
-            result["robots_analysis"]
-        )
+            st.header("📄 Extracted SEO Information")
 
-        show_audit_card(
-            "Favicon",
-            result["favicon_analysis"]
-        )
+            st.subheader("Page Title")
+            st.write(result["title"])
 
-        # -----------------------------
-        # Extracted SEO Information
-        # -----------------------------
-        st.divider()
+            st.subheader("Meta Description")
+            st.write(result["meta_description"])
 
-        st.header("📄 Extracted SEO Information")
+            st.subheader("Headings")
 
-        st.subheader("Page Title")
-        st.write(result["title"])
+            for tag, items in result["headings"].items():
 
-        st.subheader("Meta Description")
-        st.write(result["meta_description"])
+                with st.expander(
+                    f"{tag} ({len(items)})",
+                    expanded=False
+                ):
 
-        st.subheader("Headings")
+                    if items:
+                        for item in items:
+                            st.write(f"• {item}")
+                    else:
+                        st.caption("None")
 
-        for tag, items in result["headings"].items():
-
-            with st.expander(
-                f"{tag} ({len(items)})",
-                expanded=False
-            ):
-
-                if items:
-                    for item in items:
-                        st.write(f"• {item}")
-                else:
-                    st.caption("None")
-
-    else:
-        st.error(result["message"])
+        else:
+            st.error(result["message"])

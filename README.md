@@ -24,8 +24,6 @@ The application scans a website, extracts important SEO information, identifies 
 - Robots.txt Detection
 - Sitemap.xml Detection
 - Overall SEO Score
-- PDF Report Export
-- CSV Report Export
 - Interactive Dashboard
 
 ---
@@ -77,8 +75,7 @@ seo-audit-platform/
 │
 ├── utils/
 │   ├── helpers.py
-│   ├── validators.py
-│   └── export.py
+│   └── validators.py
 │
 ├── assets/
 │
