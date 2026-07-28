@@ -92,6 +92,11 @@ class SEOAnalyzer:
 
         "viewport": self.get_viewport(),
         "viewport_analysis": self.evaluate_viewport(),
+
+        "robots": self.get_robots(),
+        "robots_analysis": self.evaluate_robots(),
+
+        
         }
 
     # -------------------------------------------------
@@ -423,4 +428,60 @@ class SEOAnalyzer:
             "status": "Warning",
             "score": 6,
             "message": "Viewport exists but may not be optimized for responsive design."
+        }
+
+
+    # -------------------------------------------------
+    # Robots Meta Tag
+    # -------------------------------------------------
+
+    def get_robots(self):
+        robots = self.soup.find(
+            "meta",
+            attrs={"name": "robots"}
+        )
+        if robots:
+            return robots.get("content", "Not Found")
+        return "Not Found"
+
+    # -------------------------------------------------
+    # Robots Meta Tag Evaluation
+    # -------------------------------------------------
+
+    def evaluate_robots(self):
+        robots = self.get_robots()
+        if robots == "Not Found":
+            return {
+                "value": robots,
+                "status": "Warning",
+                "score": 7,
+                "message": (
+                    "Robots meta tag is missing. "
+                    "Most search engines default to 'index,follow', "
+                    "but explicitly defining it is recommended."
+                )
+            }
+
+        robots_lower = robots.lower()
+        if "noindex" in robots_lower:
+            return {
+                "value": robots,
+                "status": "Fail",
+                "score": 0,
+                "message": "Page is blocked from search engine indexing."
+            }
+
+        if "nofollow" in robots_lower:
+            return {
+                "value": robots,
+                "status": "Warning",
+                "score": 5,
+                "message": "Links on this page are marked as 'nofollow'."
+            }
+        
+        return {
+            "value": robots,
+            "status": "Pass",
+            "score": 10,
+            "message": "Page is configured for indexing and link following."
         }

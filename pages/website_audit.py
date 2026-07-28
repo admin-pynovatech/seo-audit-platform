@@ -137,8 +137,13 @@ if st.button("Start Audit"):
             result["viewport_analysis"]
         )
 
+        show_audit_card(
+            "Robots Meta Tag",
+            result["robots_analysis"]
+        )
 
-        
+
+
         # ---------------------------------
         # Extracted SEO Information
         # ---------------------------------
