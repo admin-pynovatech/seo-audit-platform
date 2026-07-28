@@ -94,7 +94,7 @@ seo-audit-platform/
 Clone the repository
 
 ```bash
-git clone https://github.com/your-username/seo-audit-platform.git
+git clone https://github.com/admin-pynovatech/seo-audit-platform.git
 ```
 
 Move into the project
