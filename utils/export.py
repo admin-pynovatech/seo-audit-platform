@@ -49,3 +49,4 @@ def export_json(report_data, output_dir="reports"):
     generator.generate_json(file_path)
 
     return file_path
+
