@@ -25,7 +25,6 @@ website_audit = st.Page(
     icon="🌐"
 )
 
-
 about = st.Page(
     "pages/about.py",
     title="About",
