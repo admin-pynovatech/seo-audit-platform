@@ -231,6 +231,10 @@ PyNova Tech develops modern software solutions in:
 
 This repository is part of the PyNova Tech open-source portfolio showcasing practical, production-inspired Python projects.
 
-## ⭐ Support
+## 🌐 Organization
 
-If you found this project useful, consider giving it a ⭐ on GitHub.
+**PyNova Tech**
+
+Developing practical AI, Python, and Data Engineering solutions through open-source projects.
+
+If you find this project helpful, consider giving it a ⭐ and following PyNova Tech for future projects.
