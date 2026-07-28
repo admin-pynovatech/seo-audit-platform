@@ -70,10 +70,120 @@ class SEOAnalyzer:
 
         return {
 
-            "title": self.get_title(),
+        "title": self.get_title(),
+        "meta_description": self.get_meta_description(),
+        "headings": self.get_headings(),
 
-            "meta_description": self.get_meta_description(),
+        "title_analysis": self.evaluate_title(),
+        "meta_analysis": self.evaluate_meta_description(),
+        "h1_analysis": self.evaluate_h1(),
+        }
 
-            "headings": self.get_headings(),
+    # -------------------------------------------------
+    # Title Evaluation
+    # -------------------------------------------------
 
+    def evaluate_title(self):
+
+        title = self.get_title()
+
+        if title == "Not Found":
+            return {
+                "value": title,
+                "status": "Fail",
+                "score": 0,
+                "message": "Title tag is missing."
+            }
+
+        length = len(title)
+
+        if 50 <= length <= 60:
+            status = "Pass"
+            score = 10
+            message = "Title length is optimal."
+        elif 30 <= length < 50 or 60 < length <= 70:
+            status = "Warning"
+            score = 7
+            message = "Title length could be improved."
+        else:
+            status = "Fail"
+            score = 3
+            message = "Title is too short or too long."
+
+        return {
+            "value": title,
+            "length": length,
+            "status": status,
+            "score": score,
+            "message": message,
+        }
+
+    # -------------------------------------------------
+    # Meta Description Evaluation
+    # -------------------------------------------------
+
+    def evaluate_meta_description(self):
+        description = self.get_meta_description()
+
+        if description == "Not Found":
+            return {
+                "value": description,
+                "status": "Fail",
+                "score": 0,
+                "message": "Meta description is missing."
+            }
+
+        length = len(description)
+
+        if 120 <= length <= 160:
+            status = "Pass"
+            score = 10
+            message = "Meta description length is optimal."
+        elif 80 <= length < 120 or 160 < length <= 180:
+            status = "Warning"
+            score = 7
+            message = "Meta description could be improved."
+        else:
+            status = "Fail"
+            score = 3
+            message = "Meta description length is not ideal."
+
+        return {
+            "value": description,
+            "length": length,
+            "status": status,
+            "score": score,
+            "message": message,
+        }
+
+    # -------------------------------------------------
+    # H1 Evaluation
+    # -------------------------------------------------
+
+    def evaluate_h1(self):
+        headings = self.get_headings()
+
+        h1 = headings["H1"]
+
+        if len(h1) == 1:
+            return {
+                "count": 1,
+                "status": "Pass",
+                "score": 10,
+                "message": "Exactly one H1 found."
+            }
+
+        if len(h1) == 0:
+            return {
+                "count": 0,
+                "status": "Fail",
+                "score": 0,
+                "message": "No H1 found."
+            }
+
+        return {
+            "count": len(h1),
+            "status": "Warning",
+            "score": 5,
+            "message": "Multiple H1 tags found."
         }
