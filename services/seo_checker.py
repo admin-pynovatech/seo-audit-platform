@@ -89,6 +89,9 @@ class SEOAnalyzer:
 
         "charset": self.get_charset(),
         "charset_analysis": self.evaluate_charset(),
+
+        "viewport": self.get_viewport(),
+        "viewport_analysis": self.evaluate_viewport(),
         }
 
     # -------------------------------------------------
@@ -373,4 +376,51 @@ class SEOAnalyzer:
             "score": 10,
             "message": "Charset is declared."
         }
-    
+
+
+    # -------------------------------------------------
+    # Viewport
+    # -------------------------------------------------
+
+    def get_viewport(self):
+        viewport = self.soup.find(
+            "meta",
+            attrs={"name": "viewport"}
+        )
+        if viewport:
+            return viewport.get("content", "Not Found")
+        return "Not Found"
+
+    # -------------------------------------------------
+    # Viewport evaluation
+    # -------------------------------------------------
+
+    def evaluate_viewport(self):
+        viewport = self.get_viewport()
+
+        if viewport == "Not Found":
+
+            return {
+                "value": viewport,
+                "status": "Fail",
+                "score": 0,
+                "message": "Viewport meta tag is missing."
+            }
+
+        viewport_lower = viewport.lower()
+
+        if "width=device-width" in viewport_lower:
+
+            return {
+                "value": viewport,
+                "status": "Pass",
+                "score": 10,
+                "message": "Viewport is configured for responsive design."
+            }
+
+        return {
+            "value": viewport,
+            "status": "Warning",
+            "score": 6,
+            "message": "Viewport exists but may not be optimized for responsive design."
+        }

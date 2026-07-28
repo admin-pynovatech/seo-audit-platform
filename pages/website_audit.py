@@ -132,6 +132,13 @@ if st.button("Start Audit"):
             result["charset_analysis"]
         )
 
+        show_audit_card(
+            "Viewport",
+            result["viewport_analysis"]
+        )
+
+
+        
         # ---------------------------------
         # Extracted SEO Information
         # ---------------------------------
