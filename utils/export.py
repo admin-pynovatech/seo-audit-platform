@@ -2,9 +2,9 @@ import os
 
 from services.report_generator import ReportGenerator
 
+def export_pdf(report_data):
 
-def export_pdf(report_data, output_dir="reports"):
-
+    output_dir = "reports/pdf"
     os.makedirs(output_dir, exist_ok=True)
 
     file_path = os.path.join(
@@ -19,8 +19,9 @@ def export_pdf(report_data, output_dir="reports"):
     return file_path
 
 
-def export_csv(report_data, output_dir="reports"):
+def export_csv(report_data):
 
+    output_dir = "reports/csv"
     os.makedirs(output_dir, exist_ok=True)
 
     file_path = os.path.join(
@@ -35,8 +36,9 @@ def export_csv(report_data, output_dir="reports"):
     return file_path
 
 
-def export_json(report_data, output_dir="reports"):
+def export_json(report_data):
 
+    output_dir = "reports/json"
     os.makedirs(output_dir, exist_ok=True)
 
     file_path = os.path.join(
@@ -49,4 +51,3 @@ def export_json(report_data, output_dir="reports"):
     generator.generate_json(file_path)
 
     return file_path
-

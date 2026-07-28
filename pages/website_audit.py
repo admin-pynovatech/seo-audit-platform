@@ -3,6 +3,7 @@ import streamlit as st
 from services.crawler import WebsiteCrawler
 from utils.helpers import show_audit_card
 from utils.score import SEOScoreCalculator
+from utils.export import (export_pdf,export_csv,export_json)
 
 st.title("🌐 Website Audit")
 
@@ -31,6 +32,27 @@ if st.button("Start Audit"):
         dashboard = calculator.calculate()
 
         st.success(result["message"])
+
+        st.divider()
+
+        st.subheader("📥 Export Reports")
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            if st.button("📄 Export PDF"):
+                file = export_pdf(result)
+                st.success(f"PDF saved to {file}")
+
+        with col2:
+            if st.button("📊 Export CSV"):
+                file = export_csv(result)
+                st.success(f"CSV saved to {file}")
+
+        with col3:
+            if st.button("📝 Export JSON"):
+                file = export_json(result)
+                st.success(f"JSON saved to {file}")
 
         st.header("📊 SEO Dashboard")
 
