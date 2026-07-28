@@ -96,7 +96,10 @@ class SEOAnalyzer:
         "robots": self.get_robots(),
         "robots_analysis": self.evaluate_robots(),
 
-        
+        "favicon": self.get_favicon(),
+        "favicon_analysis": self.evaluate_favicon(),
+
+
         }
 
     # -------------------------------------------------
@@ -484,4 +487,39 @@ class SEOAnalyzer:
             "status": "Pass",
             "score": 10,
             "message": "Page is configured for indexing and link following."
+        }
+
+
+
+    # -------------------------------------------------
+    # Favicon
+    # -------------------------------------------------
+
+    def get_favicon(self):
+        favicon = self.soup.find(
+            "link",
+            rel=lambda value: value and "icon" in value.lower()
+        )
+        if favicon:
+            return favicon.get("href", "Not Found")
+        return "Not Found"
+
+    # -------------------------------------------------
+    # Favicon evaluation
+    # -------------------------------------------------
+
+    def evaluate_favicon(self):
+        favicon = self.get_favicon()
+        if favicon == "Not Found":
+            return {
+                "value": favicon,
+                "status": "Warning",
+                "score": 5,
+                "message": "No favicon was found."
+            }
+        return {
+            "value": favicon,
+            "status": "Pass",
+            "score": 10,
+            "message": "Favicon is present."
         }

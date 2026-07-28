@@ -142,6 +142,12 @@ if st.button("Start Audit"):
             result["robots_analysis"]
         )
 
+        show_audit_card(
+            "Favicon",
+            result["favicon_analysis"]
+        )
+
+        
 
 
         # ---------------------------------
