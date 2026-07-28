@@ -10,11 +10,9 @@ This module DOES NOT calculate SEO scores.
 import time
 
 import requests
-from bs4 import BeautifulSoup
 
 from config import Config
 from utils.validators import validate_url
-
 from services.seo_checker import SEOAnalyzer
 
 
@@ -33,7 +31,6 @@ class WebsiteCrawler:
             }
 
         try:
-
             start = time.perf_counter()
 
             response = requests.get(
@@ -48,7 +45,6 @@ class WebsiteCrawler:
             end = time.perf_counter()
 
             seo = SEOAnalyzer(response.text)
-
             seo_data = seo.analyze()
 
             return {
@@ -56,17 +52,12 @@ class WebsiteCrawler:
                 "url": response.url,
                 "status_code": response.status_code,
                 "response_time": round(end - start, 3),
-
                 **seo_data,
-
                 "message": "Website crawled successfully."
             }
 
         except requests.exceptions.RequestException as e:
-
             return {
                 "success": False,
                 "message": str(e)
             }
-
-        
