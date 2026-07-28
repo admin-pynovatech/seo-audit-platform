@@ -82,6 +82,9 @@ class SEOAnalyzer:
         
         "open_graph": self.get_open_graph(),
         "open_graph_analysis": self.evaluate_open_graph(),
+
+        "language": self.get_language(),
+        "language_analysis": self.evaluate_language(),
         }
 
     # -------------------------------------------------
@@ -305,3 +308,65 @@ class SEOAnalyzer:
             "score": score,
             "message": message
         }
+
+    # -------------------------------------------------
+    # HTML Language
+    # -------------------------------------------------
+
+    def get_language(self):
+        html = self.soup.find("html")
+        if html:
+            return html.get("lang", "Not Found")
+
+        return "Not Found"
+
+    # -------------------------------------------------
+    # HTML Language Evaluation
+    # -------------------------------------------------
+
+    def evaluate_language(self):
+        language = self.get_language()
+        if language == "Not Found":
+            return {
+                "value": language,
+                "status": "Fail",
+                "score": 0,
+                "message": "Language attribute is missing."
+            }
+        return {
+            "value": language,
+            "status": "Pass",
+            "score": 10,
+            "message": "Language attribute is present."
+        }
+
+    # -------------------------------------------------
+    # HTML Charset
+    # -------------------------------------------------
+
+    def get_charset(self):
+        charset = self.soup.find("meta", charset=True)
+        if charset:
+            return charset.get("charset")
+        return "Not Found"
+
+    # -------------------------------------------------
+    # HTML Charset Evaluation
+    # -------------------------------------------------
+
+    def evaluate_charset(self):
+        charset = self.get_charset()
+        if charset == "Not Found":
+            return {
+                "value": charset,
+                "status": "Fail",
+                "score": 0,
+                "message": "Charset declaration is missing."
+            }
+        return {
+            "value": charset,
+            "status": "Pass",
+            "score": 10,
+            "message": "Charset is declared."
+        }
+    

@@ -122,6 +122,11 @@ if st.button("Start Audit"):
             result["open_graph_analysis"]
         )
 
+        show_audit_card(
+            "HTML Language",
+            result["language_analysis"]
+        )
+
         # ---------------------------------
         # Extracted SEO Information
         # ---------------------------------
