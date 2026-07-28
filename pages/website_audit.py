@@ -24,17 +24,14 @@ if st.button("Start Audit"):
 
     if result["success"]:
 
-        # ---------------------------------
-        # Dashboard Data
-        # ---------------------------------
+        # -----------------------------
+        # Dashboard
+        # -----------------------------
         calculator = SEOScoreCalculator(result)
         dashboard = calculator.calculate()
 
         st.success(result["message"])
 
-        # ---------------------------------
-        # SEO Dashboard
-        # ---------------------------------
         st.header("📊 SEO Dashboard")
 
         st.metric(
@@ -63,9 +60,9 @@ if st.button("Start Audit"):
                 f'Fail\n\n{dashboard["summary"]["Fail"]}'
             )
 
-        # ---------------------------------
+        # -----------------------------
         # Technical Information
-        # ---------------------------------
+        # -----------------------------
         st.divider()
 
         st.header("🌐 Technical Information")
@@ -90,9 +87,9 @@ if st.button("Start Audit"):
                 result["url"]
             )
 
-        # ---------------------------------
+        # -----------------------------
         # SEO Audit
-        # ---------------------------------
+        # -----------------------------
         st.divider()
 
         st.header("📈 SEO Audit")
@@ -147,12 +144,9 @@ if st.button("Start Audit"):
             result["favicon_analysis"]
         )
 
-        
-
-
-        # ---------------------------------
+        # -----------------------------
         # Extracted SEO Information
-        # ---------------------------------
+        # -----------------------------
         st.divider()
 
         st.header("📄 Extracted SEO Information")
@@ -167,7 +161,10 @@ if st.button("Start Audit"):
 
         for tag, items in result["headings"].items():
 
-            with st.expander(f"{tag} ({len(items)})", expanded=False):
+            with st.expander(
+                f"{tag} ({len(items)})",
+                expanded=False
+            ):
 
                 if items:
                     for item in items:
