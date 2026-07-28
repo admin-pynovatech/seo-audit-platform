@@ -25,11 +25,6 @@ website_audit = st.Page(
     icon="🌐"
 )
 
-reports = st.Page(
-    "pages/reports.py",
-    title="Reports",
-    icon="📄"
-)
 
 about = st.Page(
     "pages/about.py",
@@ -45,7 +40,6 @@ pg = st.navigation(
         "SEO Audit Platform": [
             dashboard,
             website_audit,
-            reports,
             about
         ]
     }
