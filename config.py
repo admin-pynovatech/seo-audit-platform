@@ -1,32 +1,48 @@
+"""
+Application configuration settings.
+
+Loads environment variables from a .env file and provides
+application-wide configuration constants.
+"""
+
 import os
+from typing import Final
+
 from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class Config:
-    APP_NAME = os.getenv(
+    """Application configuration."""
+
+    # ==========================================
+    # Application Settings
+    # ==========================================
+
+    APP_NAME: Final[str] = os.getenv(
         "APP_NAME",
         "Website Crawler"
     )
 
-    APP_VERSION = os.getenv(
+    APP_VERSION: Final[str] = os.getenv(
         "APP_VERSION",
         "1.0.0"
     )
 
-    DEBUG = os.getenv(
-        "DEBUG",
-        "False"
-    ).lower() == "true"
+    DEBUG: Final[bool] = (
+        os.getenv("DEBUG", "False").lower() == "true"
+    )
 
-    # -------------------------
+    # ==========================================
     # HTTP Request Settings
-    # -------------------------
-    REQUEST_TIMEOUT = int(
+    # ==========================================
+
+    REQUEST_TIMEOUT: Final[int] = int(
         os.getenv("REQUEST_TIMEOUT", 10)
     )
 
-    HEADERS = {
+    HEADERS: Final[dict] = {
         "User-Agent": os.getenv(
             "USER_AGENT",
             (
@@ -37,11 +53,12 @@ class Config:
         )
     }
 
-    # -------------------------
+    # ==========================================
     # Crawler Settings
-    # -------------------------
-    ALLOW_REDIRECTS = True
+    # ==========================================
 
-    VERIFY_SSL = True
+    ALLOW_REDIRECTS: Final[bool] = True
 
-    MAX_REDIRECTS = 10
+    VERIFY_SSL: Final[bool] = True
+
+    MAX_REDIRECTS: Final[int] = 10
