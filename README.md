@@ -401,19 +401,21 @@ https://github.com/admin-pynovatech
 
 ---
 
-# 🎯 Available for Custom Development
+# 👨‍💻 About PyNova Tech
 
-If you're looking for custom Python development, I can help with projects such as:
+PyNova Tech focuses on building practical software solutions using Python and AI technologies.
 
-- Custom Web Crawlers
-- Data Extraction & Automation
-- Streamlit Dashboards
-- AI-Powered Applications
-- FastAPI Backend Development
-- Business Automation Tools
-- Data Processing Pipelines
+Areas of expertise include:
 
-Feel free to explore my repositories to see more Python projects demonstrating different technologies and real-world use cases.
+- 🐍 Python Application Development
+- 🤖 AI & LLM Applications
+- 🌐 Web Crawling & Data Extraction
+- 📊 Data Analytics Dashboards
+- ⚙️ Workflow Automation
+- 🔌 FastAPI & Backend Development
+- 📈 Business Intelligence Solutions
+
+This repository is part of a growing portfolio of Python-based applications designed to solve real-world problems with clean architecture and maintainable code.
 
 ---
 
