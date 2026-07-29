@@ -278,13 +278,13 @@ git push origin feature-name
 
 ### Crawl Results
 
-![Results](screenshots/crawlResult.png)
+![Results](screenshots/crawlerResult.png)
 
 ---
 
 ### About
 
-![About](screenshots/aboutPage.png)
+![About](screenshots/crawlerAbout.png)
 
 ---
 
