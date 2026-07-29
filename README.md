@@ -288,7 +288,7 @@ git push origin feature-name
 
 ---
 
-### Demo
+### Website Crawler Demo
 
 ![Website Crawler Demo](screenshots/demo.gif)
 
