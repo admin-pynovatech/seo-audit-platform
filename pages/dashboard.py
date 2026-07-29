@@ -1,50 +1,55 @@
+"""
+Dashboard page for the Website Crawler application.
+"""
+
 import streamlit as st
+
+from config import Config
+
 
 st.set_page_config(
     page_title="Dashboard",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
 )
 
 st.title("📊 Website Crawler Dashboard")
 
-st.markdown("""
-Welcome to the **Website Crawler** application.
+st.markdown(
+    f"""
+Welcome to **{Config.APP_NAME}**.
 
-This tool allows you to crawl a website, inspect HTTP responses, and analyze
-basic webpage information through an interactive dashboard.
+This application demonstrates the fundamentals of **web crawling**, **HTTP communication**, and **HTML parsing** using Python.
 
-Use the navigation menu on the left to start crawling websites.
-""")
+Use the navigation menu to crawl websites, inspect HTTP responses, and explore webpage information through an interactive dashboard.
+"""
+)
 
 st.divider()
 
-# -----------------------------------
+# ==========================================
 # Quick Overview
-# -----------------------------------
+# ==========================================
 
 st.subheader("🚀 Quick Overview")
 
-col1, col2, col3 = st.columns(3)
+overview = [
+    ("Project", Config.APP_NAME, "Python & Streamlit"),
+    ("Version", Config.APP_VERSION, "Current Release"),
+    ("Status", "Ready", "Start Crawling"),
+]
 
-with col1:
-    with st.container(border=True):
-        st.metric("Project", "Website Crawler")
-        st.caption("Python & Streamlit")
+columns = st.columns(len(overview))
 
-with col2:
-    with st.container(border=True):
-        st.metric("Version", "1.0.0")
-        st.caption("Demo Release")
+for column, (title, value, caption) in zip(columns, overview):
+    with column:
+        with st.container(border=True):
+            st.metric(title, value)
+            st.caption(caption)
 
-with col3:
-    with st.container(border=True):
-        st.metric("Status", "Ready")
-        st.caption("Start Crawling")
-
-# -----------------------------------
+# ==========================================
 # Features
-# -----------------------------------
+# ==========================================
 
 st.divider()
 
@@ -58,23 +63,35 @@ features = [
     "🔄 Redirect Detection",
     "📄 Page Title Extraction",
     "🖥️ Server Information",
-    "📦 Content Type & Encoding Detection",
+    "📦 Content Type Detection",
+    "🔤 Character Encoding Detection",
+    "📏 Content Length Information",
     "📊 Page Statistics",
-    "📑 HTTP Headers Viewer",
+    "📑 HTTP Response Headers Viewer",
 ]
 
-for feature in features:
-    st.markdown(f"- {feature}")
+left_column, right_column = st.columns(2)
 
-# -----------------------------------
+half = len(features) // 2
+
+with left_column:
+    for feature in features[:half]:
+        st.markdown(f"- {feature}")
+
+with right_column:
+    for feature in features[half:]:
+        st.markdown(f"- {feature}")
+
+# ==========================================
 # Workflow
-# -----------------------------------
+# ==========================================
 
 st.divider()
 
 st.subheader("⚙️ Workflow")
 
-st.code("""
+st.code(
+    """
 Enter Website URL
         │
         ▼
@@ -84,43 +101,44 @@ Validate URL
 Send HTTP Request
         │
         ▼
-Download HTML
+Download Webpage HTML
         │
         ▼
 Extract Website Information
         │
         ▼
 Display Crawl Results
-""", language="text")
+""",
+    language="text",
+)
 
-# -----------------------------------
+# ==========================================
 # Technology Stack
-# -----------------------------------
+# ==========================================
 
 st.divider()
 
 st.subheader("🛠️ Technology Stack")
 
-tech1, tech2, tech3, tech4 = st.columns(4)
+technologies = [
+    "🐍 Python",
+    "🎈 Streamlit",
+    "🌐 Requests",
+    "🍲 BeautifulSoup4",
+]
 
-with tech1:
-    st.info("🐍 Python")
+columns = st.columns(len(technologies))
 
-with tech2:
-    st.info("🎈 Streamlit")
+for column, technology in zip(columns, technologies):
+    with column:
+        st.info(technology)
 
-with tech3:
-    st.info("🌐 Requests")
-
-with tech4:
-    st.info("🍲 BeautifulSoup4")
-
-# -----------------------------------
+# ==========================================
 # Get Started
-# -----------------------------------
+# ==========================================
 
 st.divider()
 
 st.success(
-    "👈 Select **Website Crawler** from the sidebar to begin crawling a website."
+    "👈 Select **Website Crawler** from the sidebar to begin exploring a website."
 )
