@@ -290,7 +290,7 @@ git push origin feature-name
 
 ### Demo
 
-![Demo](screnshots/demo.gif)
+![Website Crawler Demo](screenshots/demo.gif)
 
 ---
 
