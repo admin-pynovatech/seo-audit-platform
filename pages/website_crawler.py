@@ -1,15 +1,21 @@
-import streamlit as st
+"""
+Website Crawler page.
+"""
+
 import pandas as pd
+import streamlit as st
+
 from services.crawler import WebsiteCrawler
+
 
 st.title("🌐 Website Crawler")
 
 url = st.text_input(
     "Website URL",
-    placeholder="https://example.com"
+    placeholder="https://example.com",
 )
 
-if st.button("Start Crawl"):
+if st.button("Start Crawl", type="primary"):
 
     if not url.strip():
         st.warning("Please enter a website URL.")
@@ -18,112 +24,104 @@ if st.button("Start Crawl"):
     crawler = WebsiteCrawler()
 
     with st.spinner("Crawling website..."):
-
         result = crawler.crawl(url)
 
     if result["success"]:
 
         st.success(result["message"])
 
-        # -----------------------------
+        # ==========================================
         # Crawl Information
-        # -----------------------------
-        col1, col2, col3 = st.columns(3)
+        # ==========================================
 
-        def metric_card(title, value, icon):
-            st.markdown(
-                f"""
-                <div style="
-                    border:1px solid #ddd;
-                    border-radius:10px;
-                    padding:20px;
-                    text-align:center;
-                    box-shadow:2px 2px 8px rgba(0,0,0,0.08);
-                ">
-                    <h4>{icon} {title}</h4>
-                    <h2>{value}</h2>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+        st.subheader("📡 Crawl Information")
 
-        with col1:
-            metric_card("Status Code", result["status_code"], "📡")
+        metrics = [
+            ("Status Code", result["status_code"]),
+            ("Response Time", f"{result['response_time']:.3f} sec"),
+            ("Redirects", result["redirects"]),
+        ]
 
-        with col2:
-            metric_card("Response Time", f"{result['response_time']:.2f} sec", "⏱️")
+        columns = st.columns(len(metrics))
 
-        with col3:
-            metric_card("Redirects", result["redirects"], "🔄")
+        for column, (label, value) in zip(columns, metrics):
+            with column:
+                st.metric(label, value)
 
-        st.write("**Final URL:**")
+        st.write("**Final URL**")
         st.code(result["url"])
 
-        # -----------------------------
+        # ==========================================
         # Page Information
-        # -----------------------------
+        # ==========================================
+
         st.divider()
-        st.header("📄 Page Information")
+        st.subheader("📄 Page Information")
 
-        col1, col2 = st.columns(2)
+        page_info = pd.DataFrame(
+            {
+                "Property": [
+                    "Title",
+                    "Protocol",
+                    "Content Type",
+                    "Encoding",
+                    "Server",
+                    "Content Length",
+                ],
+                "Value": [
+                    result["title"],
+                    result["protocol"],
+                    result["content_type"],
+                    result["encoding"],
+                    result["server"],
+                    result["content_length"],
+                ],
+            }
+        )
 
-        with col1:
-            st.write("**Title**")
-            st.write(result["title"])
+        st.dataframe(
+            page_info,
+            hide_index=True,
+            use_container_width=True,
+        )
 
-            st.write("**Content Type**")
-            st.write(result["content_type"])
-
-            st.write("**Encoding**")
-            st.write(result["encoding"])
-
-        with col2:
-            st.write("**Server**")
-            st.write(result["server"])
-
-            st.write("**Content Length**")
-            st.write(result["content_length"])
-
-            st.write("**Protocol**")
-            st.write(result["protocol"])
-
-        # -----------------------------
+        # ==========================================
         # Page Statistics
-        # -----------------------------
+        # ==========================================
+
         st.divider()
-        st.header("📊 Page Statistics")
+        st.subheader("📊 Page Statistics")
 
-        col1, col2, col3 = st.columns(3)
+        stats = [
+            ("Links", result["links"]),
+            ("Images", result["images"]),
+            ("Scripts", result["scripts"]),
+            ("Stylesheets", result["stylesheets"]),
+        ]
 
-        with col1:
-            st.metric(
-                "Links",
-                result["links"]
-            )
+        columns = st.columns(len(stats))
 
-        with col2:
-            st.metric(
-                "Images",
-                result["images"]
-            )
+        for column, (label, value) in zip(columns, stats):
+            with column:
+                st.metric(label, value)
 
-        with col3:
-            st.metric(
-                "Scripts",
-                result["scripts"]
-            )
-
-        # -----------------------------
+        # ==========================================
         # HTTP Headers
-        # -----------------------------
+        # ==========================================
 
         st.divider()
-        st.header("📡 HTTP Headers")
+        st.subheader("📑 HTTP Response Headers")
 
-        for key, value in result["headers"].items():
+        headers_df = pd.DataFrame(
+            list(result["headers"].items()),
+            columns=["Header", "Value"],
+        )
 
-            with st.expander(key):
-                st.code(value)
+        st.dataframe(
+            headers_df,
+            hide_index=True,
+            use_container_width=True,
+        )
 
     else:
         st.error(result["message"])
