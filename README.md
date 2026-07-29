@@ -288,6 +288,12 @@ git push origin feature-name
 
 ---
 
+### Demo
+
+![Demo](screnshots/demo.gif)
+
+---
+
 # 📄 License
 
 This project is licensed under the **MIT License**.
