@@ -1,18 +1,47 @@
 # 🌐 Website Crawler
 
-A modern Python-based **Website Crawler** built with **Streamlit** that allows users to crawl websites, inspect HTTP responses, and extract essential webpage information through a clean and interactive dashboard.
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![Streamlit](https://img.shields.io/badge/Streamlit-Framework-red?logo=streamlit)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-This project is designed as a beginner-friendly demonstration of web crawling concepts using Python, Requests, BeautifulSoup, and Streamlit.
+A modern **Website Crawler** built with **Python**, **Streamlit**, **Requests**, and **BeautifulSoup** that allows users to crawl websites, inspect HTTP responses, and extract essential webpage information through an interactive dashboard.
+
+This project demonstrates the fundamentals of **web crawling**, **HTTP communication**, **HTML parsing**, and **interactive dashboard development** using Python.
+
+---
+
+# 🎥 Demo
+
+![Website Crawler Demo](screenshots/demo.gif)
 
 ---
 
 # 📌 Overview
 
-Website Crawler is a lightweight web crawling application that retrieves information from a webpage and presents it in an organized dashboard.
+The Website Crawler performs the following tasks:
 
-It validates a URL, performs an HTTP request, downloads the webpage, extracts useful information, and displays website statistics for analysis.
+- Validates website URLs
+- Sends HTTP requests
+- Downloads webpage HTML
+- Parses webpage content
+- Extracts useful metadata
+- Displays website statistics
+- Presents HTTP response information in a clean dashboard
 
-Unlike SEO auditing tools, this project focuses solely on **website crawling and webpage inspection**.
+Unlike SEO auditing tools, this project focuses purely on **website crawling and webpage inspection**.
+
+---
+
+# 🚀 Key Highlights
+
+- Modular Project Architecture
+- Beginner-Friendly Python Project
+- Interactive Streamlit Dashboard
+- HTTP Request & Response Analysis
+- HTML Parsing using BeautifulSoup
+- Clean and Responsive UI
+- Open Source
 
 ---
 
@@ -26,34 +55,48 @@ Unlike SEO auditing tools, this project focuses solely on **website crawling and
 - 📄 Page Title Extraction
 - 🖥️ Server Information
 - 📦 Content Type Detection
-- 🔤 Encoding Detection
+- 🔤 Character Encoding Detection
 - 📏 Content Length Information
 - 📊 Website Statistics
-  - Total Links
-  - Total Images
-  - Total Scripts
-  - Total Stylesheets
+    - Total Links
+    - Total Images
+    - Total Scripts
+    - Total Stylesheets
 - 📑 HTTP Response Headers Viewer
 - 📈 Interactive Dashboard
 
 ---
 
+# 📸 Screenshots
+
+## Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+## Website Crawler
+
+![Crawler](screenshots/crawlerPage.png)
+
+## Crawl Results
+
+![Results](screenshots/crawlerResult.png)
+
+## About
+
+![About](screenshots/crawlerAbout.png)
+
+---
+
 # 🛠️ Tech Stack
 
-## Frontend
-
-- Streamlit
-
-## Backend
-
-- Python
-
-## Libraries
-
-- Requests
-- BeautifulSoup4
-- Pandas
-- Python-dotenv
+| Category | Technologies |
+|-----------|--------------|
+| Language | Python |
+| Frontend | Streamlit |
+| HTTP Client | Requests |
+| HTML Parser | BeautifulSoup4 |
+| Data Processing | Pandas |
+| Configuration | python-dotenv |
 
 ---
 
@@ -80,6 +123,8 @@ website-crawler/
 │   ├── helpers.py
 │   └── validators.py
 │
+├── screenshots/
+│
 └── assets/
 ```
 
@@ -87,49 +132,77 @@ website-crawler/
 
 # 🚀 Installation
 
-## Clone the repository
+Clone the repository
 
 ```bash
 git clone https://github.com/admin-pynovatech/website-crawler.git
 ```
 
-## Navigate to the project
+Navigate to the project
 
 ```bash
 cd website-crawler
 ```
 
-## Create a virtual environment
+Create a virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
-## Activate the environment
+Activate the environment
 
-### Windows
+Windows
 
 ```bash
 .venv\Scripts\activate
 ```
 
-### Linux / macOS
+Linux / macOS
 
 ```bash
 source .venv/bin/activate
 ```
 
-## Install dependencies
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run the application
+Run the application
 
 ```bash
 streamlit run app.py
 ```
+
+---
+
+# 📋 Requirements
+
+- Python 3.10+
+- pip
+- Internet Connection
+
+---
+
+# 💻 Example Usage
+
+Enter a website URL such as:
+
+```text
+https://openai.com
+```
+
+The crawler analyzes the webpage and displays:
+
+- HTTP Status Code
+- Response Time
+- Redirect Count
+- Final URL
+- Website Information
+- Page Statistics
+- HTTP Response Headers
 
 ---
 
@@ -156,32 +229,7 @@ User Enters Website URL
 
 ---
 
-# 📋 Current Modules
-
-### 📊 Dashboard
-
-Displays an overview of the crawler application.
-
-### 🌐 Website Crawler
-
-Performs website crawling and displays:
-
-- HTTP Status Code
-- Response Time
-- Redirect Count
-- Website Information
-- Page Statistics
-- HTTP Headers
-
-### ℹ️ About
-
-Provides project information, technologies used, and application overview.
-
----
-
 # 📂 Information Extracted
-
-The crawler currently extracts:
 
 ## Request Information
 
@@ -212,22 +260,48 @@ The crawler currently extracts:
 
 ---
 
+# 📚 Learning Objectives
+
+This project demonstrates practical experience with:
+
+- Python Programming
+- Requests Library
+- BeautifulSoup
+- HTTP Protocol
+- Web Crawling
+- HTML Parsing
+- Streamlit
+- Modular Project Design
+- Error Handling
+- Configuration Management
+
+---
+
 # 🎯 Future Improvements
 
-Planned enhancements include:
+### Website Analysis
 
 - robots.txt Detection
 - sitemap.xml Detection
-- Favicon Detection
 - HTML Language Detection
-- Charset Detection
+- Favicon Detection
+- Cookie Analysis
+- Security Headers Inspection
+
+### Content Analysis
+
 - Forms Counter
 - Buttons Counter
 - Video & Audio Detection
-- Cookie Analysis
-- Security Headers Inspection
+- Internal & External Link Detection
+
+### Performance
+
 - Multi-page Crawling
 - Asynchronous Crawling using asyncio
+
+### Deployment
+
 - FastAPI REST API
 - Docker Support
 
@@ -235,62 +309,28 @@ Planned enhancements include:
 
 # 🤝 Contributing
 
-Contributions, suggestions, and improvements are welcome.
+Contributions are welcome.
 
-To contribute:
-
-1. Fork the repository
-2. Create a new feature branch
+1. Fork the repository.
+2. Create a feature branch.
 
 ```bash
 git checkout -b feature-name
 ```
 
-3. Commit your changes
+3. Commit your changes.
 
 ```bash
 git commit -m "Add new feature"
 ```
 
-4. Push to your branch
+4. Push to GitHub.
 
 ```bash
 git push origin feature-name
 ```
 
-5. Open a Pull Request
-
----
-
-## Screenshots
-
-### Dashboard
-
-![Dashboard](screenshots/dashboard.png)
-
----
-
-### Website Crawler
-
-![Crawler](screenshots/crawlerPage.png)
-
----
-
-### Crawl Results
-
-![Results](screenshots/crawlerResult.png)
-
----
-
-### About
-
-![About](screenshots/crawlerAbout.png)
-
----
-
-### Website Crawler Demo
-
-![Website Crawler Demo](screenshots/demo.gif)
+5. Open a Pull Request.
 
 ---
 
@@ -298,26 +338,15 @@ git push origin feature-name
 
 This project is licensed under the **MIT License**.
 
-See the **LICENSE** file for more information.
+See the **LICENSE** file for additional information.
 
 ---
 
-# 👨‍💻 Maintained By
+# 👨‍💻 Maintainer
 
-## PyNova Tech
+**PyNova Tech**
 
-Building modern AI, Data Analytics, and Python solutions.
-
-GitHub:
-https://github.com/admin-pynovatech
-
-> This repository is maintained by **PyNova Tech** as an educational and portfolio project demonstrating modern Python development practices.
-
----
-
-# 🏢 About PyNova Tech
-
-PyNova Tech develops practical software solutions in:
+Building practical solutions in:
 
 - 🤖 Artificial Intelligence
 - 🧠 Agentic AI
@@ -325,21 +354,21 @@ PyNova Tech develops practical software solutions in:
 - 🐍 Python Development
 - ⚙️ Automation
 - 🌐 Web Applications
-- 📈 Stock Market Automation
-- 💼 Custom Python Solutions
 
-This repository is part of the PyNova Tech open-source portfolio showcasing practical, production-inspired Python applications.
+GitHub:
+
+https://github.com/admin-pynovatech
 
 ---
 
-# 🌟 Support
+# ⭐ Support
 
-If you found this project useful:
+If you found this project helpful:
 
 - ⭐ Star this repository
-- 🍴 Fork the project
+- 🍴 Fork the repository
 - 🐛 Report issues
-- 💡 Share suggestions
-- 🤝 Contribute to the project
+- 💡 Suggest improvements
+- 🤝 Contribute
 
-Your support helps improve open-source Python projects and motivates future development.
+Your support helps improve future open-source Python projects.
