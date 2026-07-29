@@ -1,33 +1,46 @@
-# Python
+# Byte-compiled
+__pycache__/
 *.py[cod]
-*.pyo
+*$py.class
+
+# Distribution
+build/
+dist/
+*.egg-info/
 
 # Virtual Environment
-venv/
 .venv/
+venv/
 env/
 
 # Environment Variables
 .env
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
 
 # IDE
 .vscode/
 .idea/
 
-# OS
+# macOS
 .DS_Store
-Thumbs.db
 
-# Reports
-reports/pdf/*
-reports/csv/*
+# Windows
+Thumbs.db
 
 # Logs
 *.log
 
-# Cache
+# Jupyter
+.ipynb_checkpoints/
+
+# Pytest
 .pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Mypy
 .mypy_cache/
