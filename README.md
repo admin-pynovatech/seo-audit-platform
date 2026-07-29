@@ -262,6 +262,32 @@ git push origin feature-name
 
 ---
 
+## Screenshots
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+### Website Crawler
+
+![Crawler](screenshots/crawlerPage.png)
+
+---
+
+### Crawl Results
+
+![Results](screenshots/crawlResult.png)
+
+---
+
+### About
+
+![About](screenshots/aboutPage.png)
+
+---
+
 # 📄 License
 
 This project is licensed under the **MIT License**.

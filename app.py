@@ -36,7 +36,7 @@ about = st.Page(
 # --------------------------------------------------
 pg = st.navigation(
     {
-        "SEO Audit Platform": [
+        "Website Crawler Platform": [
             dashboard,
             website_audit,
             about
