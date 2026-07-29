@@ -7,15 +7,20 @@ import streamlit as st
 
 from services.crawler import WebsiteCrawler
 
-
 st.title("🌐 Website Crawler")
 
-url = st.text_input(
-    "Website URL",
-    placeholder="https://example.com",
-)
+with st.form("crawl_form"):
+    url = st.text_input(
+        "Website URL",
+        placeholder="https://example.com",
+    )
 
-if st.button("Start Crawl", type="primary"):
+    submitted = st.form_submit_button(
+        "Start Crawl",
+        type="primary",
+    )
+
+if submitted:
 
     if not url.strip():
         st.warning("Please enter a website URL.")
@@ -42,10 +47,10 @@ if st.button("Start Crawl", type="primary"):
             ("Redirects", result["redirects"]),
         ]
 
-        columns = st.columns(len(metrics))
+        cols = st.columns(len(metrics))
 
-        for column, (label, value) in zip(columns, metrics):
-            with column:
+        for col, (label, value) in zip(cols, metrics):
+            with col:
                 st.metric(label, value)
 
         st.write("**Final URL**")
@@ -82,7 +87,7 @@ if st.button("Start Crawl", type="primary"):
         st.dataframe(
             page_info,
             hide_index=True,
-            use_container_width=True,
+            width="stretch",
         )
 
         # ==========================================
@@ -96,31 +101,31 @@ if st.button("Start Crawl", type="primary"):
             ("Links", result["links"]),
             ("Images", result["images"]),
             ("Scripts", result["scripts"]),
-            ("Stylesheets", result["stylesheets"]),
+            ("Stylesheets", result.get("stylesheets", 0)),
         ]
 
-        columns = st.columns(len(stats))
+        cols = st.columns(len(stats))
 
-        for column, (label, value) in zip(columns, stats):
-            with column:
+        for col, (label, value) in zip(cols, stats):
+            with col:
                 st.metric(label, value)
 
         # ==========================================
-        # HTTP Headers
+        # HTTP Response Headers
         # ==========================================
 
         st.divider()
         st.subheader("📑 HTTP Response Headers")
 
         headers_df = pd.DataFrame(
-            list(result["headers"].items()),
+            result["headers"].items(),
             columns=["Header", "Value"],
         )
 
         st.dataframe(
             headers_df,
             hide_index=True,
-            use_container_width=True,
+            width="stretch",
         )
 
     else:
