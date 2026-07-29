@@ -1,47 +1,62 @@
+"""
+Application entry point.
+
+Configures the Streamlit application and registers
+all pages for navigation.
+"""
+
 import streamlit as st
 
-# --------------------------------------------------
+from config import Config
+
+
+# ==========================================
 # Page Configuration
-# --------------------------------------------------
+# ==========================================
+
 st.set_page_config(
-    page_title="Website Crawler",
+    page_title=Config.APP_NAME,
     page_icon="🌐",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
-# --------------------------------------------------
-# Pages
-# --------------------------------------------------
+
+# ==========================================
+# Application Pages
+# ==========================================
+
 dashboard = st.Page(
     "pages/dashboard.py",
     title="Dashboard",
-    icon="📊"
+    icon="📊",
 )
 
-website_audit = st.Page(
-    "pages/website_audit.py",
+website_crawler = st.Page(
+    "pages/website_crawler.py",
     title="Website Crawler",
-    icon="🌐"
+    icon="🌐",
 )
 
 about = st.Page(
     "pages/about.py",
     title="About",
-    icon="ℹ️"
+    icon="ℹ️",
 )
 
-# --------------------------------------------------
+
+# ==========================================
 # Navigation
-# --------------------------------------------------
-pg = st.navigation(
+# ==========================================
+
+navigation = st.navigation(
     {
         "Website Crawler Platform": [
             dashboard,
-            website_audit,
-            about
+            website_crawler,
+            about,
         ]
     }
 )
 
-pg.run()
+navigation.run()
